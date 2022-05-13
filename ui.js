@@ -6,17 +6,24 @@ clickButton.addEventListener("click", () => {
     let max = Math.floor(10);
     const pageNumber = Math.floor(Math.random() * (max - min) + min);
 
-    getImage(pageNumber, onImageReceived);
+    const promise = getImage(pageNumber);
+    promise.then(onImageReceived);
 });
 
-function onImageReceived(data) {
-    data.forEach(element => {
+function onImageReceived(array) {
+    array.forEach(element => {
         const img = document.createElement('img');
         const div = document.createElement('div');
         img.src = element.thumbnail;
         img.className = 'img-fluid img-thumbnail';
-        div.className = 'col col-1 mb-3';
+        div.className = 'col col-4 col-md-3 col-lg-1 mb-3';
+        div.setAttribute("onclick", "remove(this);");
         div.appendChild(img);
         document.querySelector('#row-5').appendChild(div);
     });
+}
+
+function remove(el) {
+    let element = el;
+    element.remove();
 }
